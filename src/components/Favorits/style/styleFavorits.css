@@ -1,0 +1,123 @@
+.favoritos h1 {
+    color: #0C0C0E;
+    font-family: Forum;
+    font-size: 40px;
+    margin: 20px;
+}
+.favoritos p {
+    width: 355px;
+    height: 320px;
+    color: #000;
+    font-family: Inter;
+    font-size: 15px;
+    line-height: 40px;
+    letter-spacing: 2px;
+    text-transform: capitalize;
+    margin: 15px 0;
+}
+.favoritos {
+    padding: 40px 20px;
+}
+.popular {
+    margin-top: 40px;
+    display: flex;
+}
+
+.radio-item {
+    display: inline-block;
+    position: relative;
+    padding: 5px;
+    margin-right: 90px;
+}
+
+.radio-item *{
+    cursor: pointer;
+}
+
+
+
+.radio-item label {
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.radio-item label:hover {
+    font-weight: 700;
+    transition: 0.2s linear;
+}
+.radio-item span {
+    display: inline-block;
+    text-align: center;
+}
+.radio-item span::before {
+    display: block;
+    content: attr(title);
+    font-weight: 700;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+.radio-item input[type='checkbox'] {
+    display: none;
+    }
+    
+    .radio-item label:before {
+    content: " ";
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    margin-right: 20px;
+    width: 17px;
+    height: 17px;
+    border-radius: 8.5px;
+    border: 2px solid #000;
+    background-color: transparent;
+    }
+    
+    .radio-item input[type=checkbox]:checked + label:after {
+    border-radius: 4.5px;
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    top: 13.75px;
+    left: 10px;
+    content: " ";
+    display: block;
+    background: #000;
+    }
+.favorits-item h1 {
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: capitalize;
+}
+.favorits-item {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-around;
+    margin-top: 40px;
+}
+.item {
+    display: block;
+    position: relative;
+    height: 555px;
+    flex-shrink: 0;
+    border: 1px solid #000;
+    background: #FFF;
+    padding: 15px 0 15px 20px;
+    margin-bottom: 40px;
+    flex-basis: calc(50% - 40px);
+}
+.item img {
+    width: 100%; 
+    height: auto; 
+    max-width: 150px;
+    max-height: 200px;
+    position: absolute;
+    bottom: -1px;
+    right: -40px;
+}

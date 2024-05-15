@@ -1,0 +1,10 @@
+{
+    "hosting": {
+    "public": "public",
+    "ignore": [
+    "firebase.json",
+    "**/.*",
+    "[**/node_modules/**](https://www.bing.com/search?form=SKPBOT&q=%2Fnode_modules%2F)"
+    ]
+    }
+    }

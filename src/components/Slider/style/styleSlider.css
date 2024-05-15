@@ -1,0 +1,73 @@
+.slider {
+    padding: 20px;
+    position: relative;
+    width: 100%;
+    height: 560px;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: center;
+    }
+.slider button {
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+        
+.slider button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+        
+.slider button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+.slide {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease-in-out;
+}
+    
+.slider .next {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+    
+.slider .prev {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+    
+.next {
+    right: 10px;
+}
+    
+    /* Анимация для плавного перехода */
+    @keyframes slideIn {
+    0% {
+    transform: translateX(100%);
+    }
+    100% {
+    transform: translateX(0);
+    }
+    }
+    
+    @keyframes slideOut {
+    0% {
+    transform: translateX(0);
+    }
+    100% {
+    transform: translateX(-100%);
+    }
+    }
+    
+    /* Применение анимаций к слайдам */
+    .slider .slide {
+    animation: slideIn 0.5s forwards;
+    }
