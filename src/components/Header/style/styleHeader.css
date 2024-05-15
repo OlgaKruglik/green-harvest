@@ -1,0 +1,31 @@
+ul{
+    list-style-type:  none;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    gap:3rem;
+    text-align: center;
+    align-items: center;
+}
+li{
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+}
+.header-link {
+    background-color: #0C0C0E;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 20px;
+    font-size: calc(8px + 1vmin);
+    position: inherit;
+    align-items: center;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    max-height: 600px;
+}
