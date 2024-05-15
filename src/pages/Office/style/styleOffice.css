@@ -1,0 +1,12 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+    margin: auto;
+    gap: 3rem;
+    padding: 40px 20px 40px 30px;
+    border: 2px solid #BB945F;
+    border-radius: 5px;
+    background-color: white;
+    margin-top: 100px;
+}

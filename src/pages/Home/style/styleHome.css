@@ -1,0 +1,74 @@
+/* welcome start */
+.welcome {
+    height: 600px;
+    background: linear-gradient(to bottom, rgba(0,0,0,1.5), rgba(0,0,0,0)), 
+    url('./image/kak-vyrastit-semena-02.jpg') no-repeat center center; 
+    background-size: cover;
+    padding-top: 220px;
+}
+.wrapper_main {
+    width: 600px;
+    height: 220px;
+    padding: 35px 40px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.into_title {
+    color: #FFF;
+    font-family: Forum;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 50px; /* 125% */
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+/* welcome end */
+
+/* about start*/
+.about h1, p {
+    color: #0C0C0E;
+    font-family: Forum;
+    font-size: 40px;
+    margin: 20px;
+}
+.about  p {
+    color: #0C0C0E;
+    font-family: Forum;
+    font-size: 40px;
+    margin: 20px;
+}
+.line {
+    border: none;
+    background-color: #0C0C0E;
+    width: 50px;
+    height: 1px;
+    flex-shrink: 0;
+    margin: auto;
+}
+.about p {
+    font-size: 20px;
+    margin: 40px 0 20px 0;
+}
+.home-main {
+    margin-top: 10px;
+}
+.h1-main {
+    font-size: 3rem;
+    color: #0C0C0E;
+}
+.home-blog {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    margin: 20px 20px;
+    justify-content: center;
+}
+
+.blog {
+    background-color: white;
+    height: 10rem;
+    border: 2px solid #97b7f7;
+    border-radius: 5px;
+    max-width: 30%;
+    cursor: pointer;
+}
+/* about end*/
