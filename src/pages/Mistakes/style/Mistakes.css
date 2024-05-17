@@ -1,0 +1,27 @@
+.audio {
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    width: 100vw;
+    height: 60vw;
+    z-index: 1;
+    }
+    
+    iframe {
+    width: 100%;
+    height: 100%;
+    }
+    
+    .blok-audio {
+    position: relative; 
+    z-index: 1;
+    width: 100%;
+    padding-top: 100px; 
+    }
+    
+    .blok-audio h1 {
+    margin-bottom: 20px;
+    color: #000; 
+    font-size: 40px;
+    text-align: center;
+    }

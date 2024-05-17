@@ -1,13 +1,13 @@
 import React from 'react'
 import './style/styleFavorits.css'
 import cucumber from './style/image/огурец.jpg'
-import blueberry from './style/image/голубика2.jpeg'
-import basil from './style/image/базилик.jpeg';
-import appleTree from './style/image/яблоня.jpeg'
+import blueberry from './style/image/голубика2.jpg'
+import basil from './style/image/базилик.jpg';
+import appleTree from './style/image/яблоня.jpg'
 import cherryTomato from './style/image/черри.webp'
-import rose from './style/image/роза.jpeg'
-import bellPepper from './style/image/перец.jpeg'
-import strawberry from './style/image/клубника.jpeg'
+import rose from './style/image/роза.jpg'
+import bellPepper from './style/image/перец.jpg'
+import strawberry from './style/image/клубника.jpg'
 import { useState } from 'react';
 
 function Favorits() {
@@ -15,7 +15,7 @@ function Favorits() {
     const [showSaplings, setShowSaplings] = useState(false);
     const [showSeedSaplings, setShowSeedSaplings] = useState(false);
 
-    const handleCheckboxChange = (event) => {
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name } = event.target;
             if (name === 'seed') {
                 setShowSeeds(!showSeeds);

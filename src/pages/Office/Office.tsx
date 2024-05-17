@@ -5,20 +5,21 @@ import { signInWithGoogle } from '../../firebase';
 import googleLogo from './style/google-logo.png';
 import { useNavigate } from 'react-router-dom';
 import { getRedirectResult } from "firebase/auth";
+import { RootState, AppDispatch } from '../../store/store';
 
 function Office() {
 
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const userStatus = useSelector(state => state.user.status);
-    const userError = useSelector(state => state.user.error);
-    const user = useSelector(state => state.user)
+    const userStatus = useSelector((state: RootState) => state.user.status);
+    const userError = useSelector((state: RootState) => state.user.error);
+    const user = useSelector((state: RootState) => state.user)
 
     
     
-    const loginHandler = async (e) => {
+    const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email.value && password.value) {
     dispatch(login({ email: email.value, password: password.value }));
@@ -26,7 +27,7 @@ function Office() {
     }
     };
     
-    const handleGoogleSignIn = async (e) => {
+    const handleGoogleSignIn = async (e: React.MouseEvent<HTMLImageElement>) => {
         e.preventDefault();
         try {
         dispatch(signInWithGoogleThunk());

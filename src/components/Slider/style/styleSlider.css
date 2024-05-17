@@ -1,73 +1,156 @@
-.slider {
-    padding: 20px;
-    position: relative;
-    width: 100%;
-    height: 560px;
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
+#carousel {
+    perspective: 1200px;
+    background: #fff;
+    padding-top: 5%;
+    font-size: 0;
+    margin-bottom: 3rem;
+    }
+    
+    #spinner {
+    transform-style: preserve-3d;
+    height: 300px;
+    transform-origin: 50% 50% -400px;
+    transition: 1s;
+    }
+    .slider     {
+        display: none;
+    }
+    #spinner figure {
+    width: 30%;
+    max-width: 500px;
+    position: absolute;
+    left: 500px;
+    transform-origin: 50% 50% -400px;
+    outline: 1px solid transparent;
     overflow: hidden;
-    justify-content: center;
+    transition: 1s;
     }
-.slider button {
-    border-radius: 50%;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-        
-.slider button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-        
-.slider button:active {
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-}
-.slide {
-    flex: 1;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.5s ease-in-out;
-}
     
-.slider .next {
+    #spinner figure.current {
+    width: 36%;
+    margin-top: -3rem;
+    }
+    
+    #spinner figure img {
+    width: 100%;
+    }
+    
+    figcaption {
     position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translate(0, -50%);
-}
-    
-.slider .prev {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translate(0, -50%);
-}
-    
-.next {
-    right: 10px;
-}
-    
-    /* Анимация для плавного перехода */
-    @keyframes slideIn {
-    0% {
-    transform: translateX(100%);
-    }
-    100% {
-    transform: translateX(0);
-    }
+    top: 100%;
+    width: 100%;
+    padding: .3rem;
+    z-index: 2;
+    font-size: 1.1rem;
+    background: rgba(0, 0, 0, 0);
+    transition: .6s;
     }
     
-    @keyframes slideOut {
-    0% {
-    transform: translateX(0);
-    }
-    100% {
-    transform: translateX(-100%);
-    }
+    .ss-icon {
+    color: #000;
+    margin: 5%;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 2rem;
+    transition: 0.6s color;
+    position: relative;
+    margin-top: -6rem;
+    border-bottom: none;
+    line-height: 0;
     }
     
-    /* Применение анимаций к слайдам */
-    .slider .slide {
-    animation: slideIn 0.5s forwards;
+    .ss-icon:hover {
+    color: #888;
+    cursor: pointer;
     }
+    @media (max-width: 768px) {
+        #carousel {
+        padding-top: 10%; 
+        }
+        #spinner {
+            display: none;
+        /* height: 200px; 
+        transform-origin: 50% 50% -200px; */
+        }
+        .slider img {
+            max-width: 100%;
+            height: auto;
+        }
+        .slider {
+            position: relative;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            }
+            
+            .slide {
+            opacity: 0;
+            transition-duration: 1s ease;
+            }
+            
+            .slide.active {
+            opacity: 1;
+            transition-duration: 1s;
+            transform: scale(1.08);
+            }
+            
+            .left-arrow, .right-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #000;
+            cursor: pointer;
+            font-size: 2rem;
+            z-index: 10;
+            }
+            
+            .left-arrow {
+            left: 32px;
+            }
+            
+            .right-arrow {
+            right: 32px;
+            }
+            .left-arrow, .right-arrow {
+                font-size: 1.5rem;
+                }
+        /* #spinner figure {
+        width: 80%;
+        max-width: 300px; 
+        left: 50%;
+        transform: translateX(-50%) rotateY(var(--i) * 1deg);
+        }
+        #spinner figure.current {
+        width: 90%; 
+        margin-top: 0;
+        }*/
+        .ss-icon {
+        display: none; 
+        } 
+        }
+        @media (max-width: 668px) {
+            #carousel {
+                overflow-x: scroll;
+                scroll-snap-type: x mandatory;
+                }
+                
+                #spinner {
+                    display: none;
+                /* display: flex; 
+                flex-wrap: nowrap; 
+                transform: none;  */
+                }
+                
+                /* #spinner figure {
+                width: 100%; 
+                max-width: none; 
+                position: relative; 
+                flex: 0 0 auto; 
+                scroll-snap-align: start; 
+                }
+                
+                .ss-icon {
+                display: none; 
+                } */
+            }

@@ -45,8 +45,9 @@ html, body {
     background-color: #FFF; 
     max-width: 1440px;
     margin: auto;
+    display: flex;
    }
-h1, h2, h3, p, label, a {
+h1, h2, h3, p, label, a, pre {
     font-family: Inter;
     font-style: normal;
     font-size: 16px;

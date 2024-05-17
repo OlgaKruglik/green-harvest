@@ -21,7 +21,7 @@ function Header() {
     return (
         <div className='header-link' onClick={hideForm}>
             <h1>Зелёный Урожай</h1>
-            <ul>
+            <ul className='list-header'>
                 <li>
                     <Link to='/'>Главнaя</Link>
                 </li>
@@ -30,10 +30,25 @@ function Header() {
                 </li>
                 <li>
                     <Link to='/seedlings' >Саженцы</Link>
-                </li>
-                    
-                    
+                </li>   
             </ul>
+            <div className='menu-burger'>
+            <div className="menu">
+            <input type="checkbox" id="burger-checkbox" className="burger-checkbox"/>
+                <label htmlFor="burger-checkbox" className="burger"/>
+                <ul className="menu-list">
+                    <li>
+                        <Link to='/' className="menu-item">Главная</Link>
+                    </li>
+                    <li>
+                        <Link to='/seeds' className="menu-item">Семена</Link>
+                    </li>
+                    <li>
+                    <Link to='/seedlings' className="menu-item">Саженцы</Link>
+                </li> 
+                </ul>
+            </div>
+            
             <img src={logoUser} alt="Logo" onClick={(e) => {
                 e.stopPropagation();
                 toggleFormVisibility();
@@ -48,6 +63,7 @@ function Header() {
                     <h1 onClick={hideForm} className='logo-form-exit'>Выйти</h1>
             </div>
             )}
+            </div>
         </div>
     )
 }

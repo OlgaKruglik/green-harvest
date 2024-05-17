@@ -9,6 +9,10 @@ import Seeds from './pages/Seeds';
 import Office from './pages/Office/Office';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import Mistakes from './pages/Mistakes/Mistakes';
+import Cultivation from './pages/Cultivation/Cultivation';
+import PlantingSeeds from './pages/PlantingSeeds/PlantingSeeds';
+import SeedGermination from './pages/SeedGermination/SeedGermination';
 
 function App() {
   return (
@@ -17,6 +21,10 @@ function App() {
       <BrowserRouter>
       <Header />
       <Routes>
+        <Route path='/seedGermination' element={<SeedGermination/>} />
+        <Route path='/plantingSeeds' element={<PlantingSeeds/>} />
+        <Route path='/cultivation' element={<Cultivation/>} />
+        <Route path='/mistakes' element={<Mistakes/>}/>
         <Route path='/' element={<Home />} />
         <Route path='user/register' element={<Register />} />
         <Route path='/seedlings' element={<Seedlings />} />
