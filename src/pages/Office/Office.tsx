@@ -41,7 +41,7 @@ function Office() {
 
         useEffect(() => {
             if (userStatus === 'succeeded') {
-            navigate('/'); // Перенаправление на главную страницу
+            navigate('/'); 
             }
             }, [userStatus, navigate]);
 

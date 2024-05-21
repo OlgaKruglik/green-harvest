@@ -63,17 +63,24 @@
     color: #888;
     cursor: pointer;
     }
+    @media (max-width: 1240px) {
+        .header-link {
+            max-width: 100%;
+        }
+        #spinner figure{
+            position: absolute;
+            left: 300px;
+        }
+    }
     @media (max-width: 768px) {
         #carousel {
         padding-top: 10%; 
         }
         #spinner {
             display: none;
-        /* height: 200px; 
-        transform-origin: 50% 50% -200px; */
         }
         .slider img {
-            max-width: 100%;
+            width: 80% !important;
             height: auto;
         }
         .slider {
@@ -82,20 +89,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            }
+        }
             
-            .slide {
+        .slide {
             opacity: 0;
             transition-duration: 1s ease;
-            }
+        }
             
-            .slide.active {
+        .slide.active {
             opacity: 1;
             transition-duration: 1s;
             transform: scale(1.08);
-            }
+        }
             
-            .left-arrow, .right-arrow {
+        .left-arrow, .right-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -103,28 +110,18 @@
             cursor: pointer;
             font-size: 2rem;
             z-index: 10;
-            }
-            
-            .left-arrow {
-            left: 32px;
-            }
-            
-            .right-arrow {
-            right: 32px;
-            }
-            .left-arrow, .right-arrow {
-                font-size: 1.5rem;
-                }
-        /* #spinner figure {
-        width: 80%;
-        max-width: 300px; 
-        left: 50%;
-        transform: translateX(-50%) rotateY(var(--i) * 1deg);
         }
-        #spinner figure.current {
-        width: 90%; 
-        margin-top: 0;
-        }*/
+            
+        .left-arrow {
+            left: 32px;
+        }
+            
+        .right-arrow {
+            right: 32px;
+        }
+        .left-arrow, .right-arrow {
+                font-size: 1.5rem;
+        }
         .ss-icon {
         display: none; 
         } 
@@ -135,22 +132,7 @@
                 scroll-snap-type: x mandatory;
                 }
                 
-                #spinner {
-                    display: none;
-                /* display: flex; 
-                flex-wrap: nowrap; 
-                transform: none;  */
-                }
-                
-                /* #spinner figure {
-                width: 100%; 
-                max-width: none; 
-                position: relative; 
-                flex: 0 0 auto; 
-                scroll-snap-align: start; 
-                }
-                
-                .ss-icon {
-                display: none; 
-                } */
+            #spinner {
+                display: none;
             }
+        }

@@ -6,22 +6,27 @@ email: string;
 password: string;
 }
 
-// Определите тип для данных пользователя
+
 interface UserType {
     uid?: string | null;
     email?: string | null;
-// Добавьте другие поля, которые вы хотите включить
 }
+export interface Seed {
+    id: string;
+    description: string;
+    type: string;
+    name: string;
+    
+    image: string;
+    rating: string;
+    }
 
-
-// Определите тип для состояния
 interface UserState {
 user: UserType | null;
 status: 'idle' | 'loading' | 'succeeded' | 'failed';
 error: string | null;
 }
 
-// Начальное состояние
 const initialState: UserState = {
 user: null,
 status: 'idle',
@@ -36,11 +41,9 @@ export const register = createAsyncThunk(
     if (!userCredential) {
     throw new Error('User registration failed');
     }
-    // Создаем объект с сериализуемыми данными
     const userData = {
     uid: userCredential.user.uid,
     email: userCredential.user.email,
-    // Другие необходимые поля
     };
     return userData;
     } catch (error: any) {
@@ -60,7 +63,6 @@ export const register = createAsyncThunk(
         throw new Error('Missing user information');
         }
         } catch (error: any) {
-        // Проверьте тип ошибки и возвращайте соответствующее сообщение
         if (error.code === 'auth/user-not-found') {
         return rejectWithValue('Пользователь не найден.');
         } else if (error.code === 'auth/wrong-password') {
@@ -105,74 +107,74 @@ export const register = createAsyncThunk(
 
 
 const userSlice = createSlice({
-name: 'user',
-initialState,
-reducers: {
-setUser(state, action: PayloadAction<UserType>) {
-state.user = action.payload;
-},
-removeUser(state) {
-state.user = null;
-},
-updateUser(state, action: PayloadAction<Partial<UserType>>) {
-state.user = { ...state.user, ...action.payload };
-},
-setError(state, action: PayloadAction<string>) {
-state.error = action.payload;
-},
-clearError(state) {
-state.error = null;
-},
+    name: 'user',
+    initialState,
+    reducers: {
+    setUser(state, action: PayloadAction<UserType>) {
+    state.user = action.payload;
+    },
+    removeUser(state) {
+    state.user = null;
+    },
+    updateUser(state, action: PayloadAction<Partial<UserType>>) {
+    state.user = { ...state.user, ...action.payload };
+    },
+    setError(state, action: PayloadAction<string>) {
+    state.error = action.payload;
+    },
+    clearError(state) {
+    state.error = null;
+    },
 },
 extraReducers: (builder) => {
-builder
-.addCase(register.pending, (state) => {
-state.status = 'loading';
-state.error = null;
-})
-.addCase(register.fulfilled, (state, action) => {
-    state.status = 'succeeded'; // Устанавливаем состояние 'succeeded'
-    state.user = action.payload; // Обновляем данные пользователя
-})
-.addCase(register.rejected, (state, action) => {
-state.status = 'failed';
-state.error = action.payload as string;
-})
-.addCase(login.pending, (state) => {
-state.status = 'loading';
-state.error = null;
-})
-.addCase(login.fulfilled, (state, action) => {
-state.status = 'succeeded';
-state.user = action.payload;
-})
-.addCase(login.rejected, (state, action) => {
-state.status = 'failed';
-state.error = action.payload as string;
-})
-.addCase(logout.pending, (state) => {
-state.status = 'loading';
-state.error = null;
-})
-.addCase(logout.fulfilled, (state) => {
-state.status = 'succeeded';
-state.user = null;
-})
-.addCase(logout.rejected, (state, action) => {
-state.status = 'failed';
-state.error = action.payload as string;
-})
-.addCase(signInWithGoogleThunk.pending, (state) => {
-    state.status = 'loading';
-    state.error = null;
+    builder
+        .addCase(register.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+    })
+    .addCase(register.fulfilled, (state, action) => {
+        state.status = 'succeeded'; 
+        state.user = action.payload;
+    })
+    .addCase(register.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+    })
+    .addCase(login.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+    })
+    .addCase(login.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload;
+    })
+    .addCase(login.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+    })
+    .addCase(logout.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+    })
+    .addCase(logout.fulfilled, (state) => {
+        state.status = 'succeeded';
+        state.user = null;
+    })
+    .addCase(logout.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+    })
+    .addCase(signInWithGoogleThunk.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
     })
     .addCase(signInWithGoogleThunk.fulfilled, (state, action) => {
-    state.status = 'succeeded';
-    state.user = action.payload;
+        state.status = 'succeeded';
+        state.user = action.payload;
     })
     .addCase(signInWithGoogleThunk.rejected, (state, action) => {
-    state.status = 'failed';
-    state.error = action.payload as string;
+        state.status = 'failed';
+        state.error = action.payload as string;
     });
 },
 });

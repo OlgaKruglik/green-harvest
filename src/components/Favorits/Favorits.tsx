@@ -1,182 +1,106 @@
 import React from 'react'
 import './style/styleFavorits.css'
-import cucumber from './style/image/огурец.jpg'
-import blueberry from './style/image/голубика2.jpg'
-import basil from './style/image/базилик.jpg';
-import appleTree from './style/image/яблоня.jpg'
-import cherryTomato from './style/image/черри.webp'
-import rose from './style/image/роза.jpg'
-import bellPepper from './style/image/перец.jpg'
-import strawberry from './style/image/клубника.jpg'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {getSeeds} from '../../firebase'
+import {Seed} from '../../store/slice/userSlice'
+
+
+
 
 function Favorits() {
     const [showSeeds, setShowSeeds] = useState(false);
     const [showSaplings, setShowSaplings] = useState(false);
-    const [showSeedSaplings, setShowSeedSaplings] = useState(false);
-
+    const [seeds, setSeeds] = useState<Seed[]>([]);
+    
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name } = event.target;
-            if (name === 'seed') {
-                setShowSeeds(!showSeeds);
-            } else if (name === 'seedling') {
-                setShowSaplings(!showSaplings); 
-            }
+    const { name, checked } = event.target;
+        if (name === 'seed') {
+            setShowSeeds(checked);
+            setShowSaplings(!checked);
+        } else if (name === 'seedling') {
+            setShowSaplings(checked);
+            setShowSeeds(!checked);
+        }
     };
-
+    
+    useEffect(() => {
+        const fetchSeeds = async () => {
+        try {
+            const seedsData = await getSeeds();
+            const formattedSeedsData: Seed[] = seedsData.map((seedData: any) => ({
+            id: seedData.id,
+            description: seedData.description,
+            type: seedData.type,
+            name: seedData.name,
+            image: seedData.image,
+            rating: seedData.rating,
+        }));
+        setSeeds(formattedSeedsData);
+        } catch (error) {
+            console.error("Ошибка при получении данных о семенах:", error);
+        }
+        };
+        fetchSeeds();
+    }, []);
+    
+    const filteredSeeds = seeds.filter(seed => seed.type === 'seeds' && parseFloat(seed.rating) > 4.7);
+    const filteredSaplings = seeds.filter(seed => seed.type === 'seedlings' && parseFloat(seed.rating) > 4.7);
+    
     return (
-        <div className='favoritos'>
-            <h1>Популярное</h1>
-            <div className="line"> </div>
-
-            <div className="popular">
-                <div className="radio-item">
-                    <input type="checkbox" id="seed" name="seed" value="seed" onChange={handleCheckboxChange}/>
-                    <label htmlFor="seed"><span title="seed">Семена</span></label>
-                </div>
-                
-                <div className="radio-item">
-                    <input type="checkbox" id="seedling" name="seedling" value="seedling" onChange={handleCheckboxChange}/>   
-                    <label htmlFor="seedling"><span title="seedling">Саженцы</span></label>
-                </div>
-            </div>
-
-            <div className='favorits-item'>
-                {showSeedSaplings && (
-                    <>
-                <div className='item seeds'>
-                    <h1>Огурец Кураж (Гавриш)</h1>
-                    <div className="line"> </div>
-                    <p>Oчень урожайный сорт, плоды долго хранятся в свежем виде и обладают высокой транспортабельностью. Cемена этого сорта характеризуются не только высокой урожайностью, но и скороспелостью, устойчивостью к разному роду заболеваний и грибков, а также хорошей транспортабельностью и высоким качеством плодов.</p>
-                    <img src={cucumber} alt='cucumber'></img>
-                </div>
-
-                <div className='item seedlings'>
-                    <h1>ГОЛУБИКА Патриот</h1>
-                    <div className="line"> </div>
-                    <p>Куст у Патриота высокий — до 1,8 м, состоит из прямостоячих и не слишком ветвистых побегов.
-                        Молодые листочки имеют красный оттенок, зрелые — тёмно-зелёный.
-                        Сорт устойчив к фитофторозу, раку стебля и гнилям корней.
-                        Патриот, в отличие от большинства голубик, менее требователен к составу почвы и климатическим условиям, самоплоден.</p>
-                    <img src={blueberry} alt='blueberry'></img>
-                </div>
-
-                <div className='item seeds'>
-                    <h1>Базилик Зеленый (БиоСемена)</h1>
-                    <div className="line"> </div>
-                    <p>Ароматный базилик, идеальный для свежих салатов и приправ. Легко выращивается и обладает мощным ароматом и насыщенным вкусом. Среднеранний урожайный сорт. Куст компактный, полураскидистый, хорошо облиственный, высотой 40-50 см. Листья миниатюрные, слабопузырчатые, зеленого цвета, ароматные.</p>
-                    <img src={basil} alt='basil'></img>
-                </div>
-
-                <div className='item seedlings'>
-                    <h1>Яблоня Домашняя (Садовый Центр)</h1>
-                    <div className="line"> </div>
-                    <p>Саженцы яблони сорта Домашняя отличаются высокой урожайностью и морозостойкостью. Плоды сочные, сладкие, с легкой кислинкой. Приносит вкусные и полезные плоды. Яблоки овально-конусовидные или плоскоокруглые. Кожица маслянистая, блестящая. Цвет зеленовато-желтый во время созревания. Потом становится светло-желтой. Масса до 180 гр.</p>
-                    <img src={appleTree} alt='apple tree'></img>
-                </div>
-                </>
-                )}
-
-                {showSeeds && (
-                    <>
-                    <div className='item seeds'>
-                        <h1>Огурец Кураж (Гавриш)</h1>
-                        <div className="line"> </div>
-                        <p>Oчень урожайный сорт, плоды долго хранятся в свежем виде и обладают высокой транспортабельностью. Cемена этого сорта характеризуются не только высокой урожайностью, но и скороспелостью, устойчивостью к разному роду заболеваний и грибков, а также хорошей транспортабельностью и высоким качеством плодов.</p>
-                        <img src={cucumber} alt='cucumber'></img>
-                    </div>
-                <div className='item seeds'>
-                    <h1>Базилик Зеленый (БиоСемена)</h1>
-                    <div className="line"> </div>
-                    <p>Ароматный базилик, идеальный для свежих салатов и приправ. Легко выращивается и обладает мощным ароматом и насыщенным вкусом. Среднеранний урожайный сорт. Куст компактный, полураскидистый, хорошо облиственный, высотой 40-50 см. Листья миниатюрные, слабопузырчатые, зеленого цвета, ароматные.</p>
-                    <img src={basil} alt='basil'></img>
-                </div>
-                    <div className='item seeds'>
-                    <h1>Томат Черри (Агрофирма Семена)</h1>
-                    <div className="line"> </div>
-                    <p>Мелкоплодный сорт томата с ярко-красными плодами, отличается сладким вкусом и высокой урожайностью. Идеален для выращивания в теплицах и на открытом грунте. Раннеспелый, высокорослый, кистевый, высокоурожайный гибрид томатов.Плоды красивой яйцевидной формы с крошечным «носиком» или с некоторой оттяжкой, гладкие, блестящие.</p>
-                    <img src={cherryTomato} alt='cherry tomato'></img>
-                </div>
-                    <div className='item seeds'>
-                    <h1>Перец Болгарский (Сады России)</h1>
-                    <div className="line"> </div>
-                    <p>Сладкий перец с толстыми стенками и ярким вкусом. Устойчив к болезням и подходит для выращивания в различных климатических условиях.Крупные четырехкамерные перцы внушительных размеров с очень толстыми стенками. ДОСТИГАЮТ 30 СМ в длину и 12 см в диаметре.</p>
-                    <img src={bellPepper} alt='bell pepper'></img>
-                </div>
-                </>
-                )}
-
-                {showSaplings && (
-                    <>
-                    <div className='item seedlings'>
-                    <h1>ГОЛУБИКА Патриот</h1>
-                    <div className="line"> </div>
-                    <p>Куст у Патриота высокий — до 1,8 м, состоит из прямостоячих и не слишком ветвистых побегов.
-                        Молодые листочки имеют красный оттенок, зрелые — тёмно-зелёный.
-                        Сорт устойчив к фитофторозу, раку стебля и гнилям корней.
-                        Патриот, в отличие от большинства голубик, менее требователен к составу почвы и климатическим условиям, самоплоден.</p>
-                    <img src={blueberry} alt='blueberry'></img>
-                </div>
-                    <div className='item seedlings'>
-                    <h1>Яблоня Домашняя (Садовый Центр)</h1>
-                    <div className="line"> </div>
-                    <p>Саженцы яблони сорта Домашняя отличаются высокой урожайностью и морозостойкостью. Плоды сочные, сладкие, с легкой кислинкой. Приносит вкусные и полезные плоды. Яблоки овально-конусовидные или плоскоокруглые. Кожица маслянистая, блестящая. Цвет зеленовато-желтый во время созревания. Потом становится светло-желтой. Масса до 180 гр.</p>
-                    <img src={appleTree} alt='apple tree'></img>
-                </div>
-                <div className='item seedlings'>
-                <h1>Роза Парковая (Цветник)</h1>
-                <div className="line"> </div>
-                <p>Саженцы парковых роз прекрасно подходят для украшения сада. Они устойчивы к заболеваниям и имеют продолжительный период цветения. Обильно цветущий сорт. На стебле 3-5 цветков, с незначительным ароматом розы. Размер цветка 6-7 см. Высота куста 100-150 см и ширина 100 см. </p>
-                <img src={rose} alt='rose'></img>
-            </div>
-            <div className='item seedlings'>
-            <h1>Клубника Садовая (Фермерские Традиции)</h1>
-            <div className="line"> </div>
-            <p>Саженцы клубники этого сорта отличаются крупными ягодами и хорошей урожайностью. Подходят для выращивания в открытом грунте и теплицах.Плоды  симметричной конической формы, расширенной по бокам. Ягоды крупные, однородные, массой 25-30 граммов. </p>
-            <img src={strawberry} alt='strawberry'></img>
+    <div className='favoritos'>
+        <h1>Популярное</h1>
+        <div className="line"></div>
+    
+        <div className="popular">
+        <div className="radio-item">
+            <input type="checkbox" id="seed" name="seed" value="seed" onChange={handleCheckboxChange} />
+            <label htmlFor="seed"><span title="seed">Семена</span></label>
         </div>
+    
+        <div className="radio-item">
+            <input type="checkbox" id="seedling" name="seedling" value="seedling" onChange={handleCheckboxChange} />
+            <label htmlFor="seedling"><span title="seedling">Саженцы</span></label>
+        </div>
+    </div>
+    
+    <div className='favorits-item'>
+        {showSeeds && filteredSeeds.map((seed) => (
+            <div className={`item ${seed.type}`} key={seed.id}>
+                <h1>{seed.name}</h1>
+                <p>{seed.description}</p>
+                <img src={seed.image} alt={seed.name} />
+            </div>
+        ))}
+    
+    {showSaplings && filteredSaplings.map((seed) => (
+        <div className={`item ${seed.type}`} key={seed.id}>
+            <h1>{seed.name}</h1>
+            <p>{seed.description}</p>
+            <img src={seed.image} alt={seed.name} />
+        </div>
+    ))}
+    
+    {!showSeeds && !showSaplings && (
+        <>
+            {filteredSaplings.slice(0, 2).map((seed) => (
+                <div className={`item ${seed.type}`} key={seed.id}>
+                    <h1>{seed.name}</h1>
+                    <p>{seed.description}</p>
+                    <img src={seed.image} alt={seed.name} />
+                </div>
+            ))}
+            {filteredSeeds.slice(0, 2).map((seed) => (
+                <div className={`item ${seed.type}`} key={seed.id}>
+                    <h1>{seed.name}</h1>
+                    <p>{seed.description}</p>
+                    <img src={seed.image} alt={seed.name} />
+                </div>
+            ))}
         </>
-                )}
-
-                {!showSeeds && !showSaplings && (
-                <>
-                    <div className='item seeds'>
-                    <h1>Огурец Кураж (Гавриш)</h1>
-                    <div className="line"> </div>
-                    <p>Oчень урожайный сорт, плоды долго хранятся в свежем виде и обладают высокой транспортабельностью. Cемена этого сорта характеризуются не только высокой урожайностью, но и скороспелостью, устойчивостью к разному роду заболеваний и грибков, а также хорошей транспортабельностью и высоким качеством плодов.</p>
-                    <img src={cucumber} alt='cucumber'></img>
-                </div>
-
-                <div className='item seedlings'>
-                    <h1>ГОЛУБИКА Патриот</h1>
-                    <div className="line"> </div>
-                    <p>Куст у Патриота высокий — до 1,8 м, состоит из прямостоячих и не слишком ветвистых побегов.
-                        Молодые листочки имеют красный оттенок, зрелые — тёмно-зелёный.
-                        Сорт устойчив к фитофторозу, раку стебля и гнилям корней.
-                        Патриот, в отличие от большинства голубик, менее требователен к составу почвы и климатическим условиям, самоплоден.</p>
-                    <img src={blueberry} alt='blueberry'></img>
-                </div>
-
-                <div className='item seeds'>
-                    <h1>Базилик Зеленый (БиоСемена)</h1>
-                    <div className="line"> </div>
-                    <p>Ароматный базилик, идеальный для свежих салатов и приправ. Легко выращивается и обладает мощным ароматом и насыщенным вкусом. Среднеранний урожайный сорт. Куст компактный, полураскидистый, хорошо облиственный, высотой 40-50 см. Листья миниатюрные, слабопузырчатые, зеленого цвета, ароматные.</p>
-                    <img src={basil} alt='basil'></img>
-                </div>
-
-                <div className='item seedlings'>
-                    <h1>Яблоня Домашняя (Садовый Центр)</h1>
-                    <div className="line"> </div>
-                    <p>Саженцы яблони сорта Домашняя отличаются высокой урожайностью и морозостойкостью. Плоды сочные, сладкие, с легкой кислинкой. Приносит вкусные и полезные плоды. Яблоки овально-конусовидные или плоскоокруглые. Кожица маслянистая, блестящая. Цвет зеленовато-желтый во время созревания. Потом становится светло-желтой. Масса до 180 гр.</p>
-                    <img src={appleTree} alt='apple tree'></img>
-                </div>
-                </>
-                )}
-
-            </div>
-        
-        </div>
-    )
-}
+    )}
+    </div>
+    </div>
+    );
+    }
 
 export default Favorits

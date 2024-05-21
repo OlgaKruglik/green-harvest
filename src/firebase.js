@@ -1,9 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import { getAuth, createUserWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider, 
-  signInWithEmailAndPassword, onAuthStateChanged as onAuthStateChangedFirebase } from "firebase/auth";
-import { signOut as signOutFirebase } from "firebase/auth";
-import { useSelector } from 'react-redux';
+import { getAuth, createUserWithEmailAndPassword, 
+  signInWithRedirect, GoogleAuthProvider, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged as onAuthStateChangedFirebase,
+  signOut as signOutFirebase } from "firebase/auth";
+
 
 // firebase deploy --token "1//03X4fDRRXU2mRCgYIARAAGAMSNwF-L9Irg7RzYfb8bFAas7SRs5iC7mQI4xHEV8u0LuXy0cqUrk1D3RxEVL9eK4W05S1Iqfnp8Y4"
 console.log(process.env);
@@ -64,26 +66,19 @@ export const singIn = async (email, password) => {
   throw new Error('No user returned from signIn');
   }
   console.log(userCredential);
-  return userCredential; // Убедитесь, что здесь возвращается объект userCredential
+  return userCredential; 
   } catch (error) {
   console.error(error);
-  throw error; // Переброс ошибки для последующей обработки
+  throw error; 
   }
   };
 
 export const onAuthStateChanged = (callback) => {
   return onAuthStateChangedFirebase(auth, (user) => { 
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
       const uid = user.uid;
       console.log(uid);
-      // ... additional logic or function calls
-      } else {
-      // User is signed out
-      // ... additional logic or function calls
       }
-      // Execute the callback function with user data
       callback(user);
   })
 }
@@ -96,12 +91,26 @@ export const signOut = async () => {
     console.error('Ошибка при выходе из системы:', error);
   }
   };
-// Пример использования функции getCities
+
 async function getCities() {
-const citiesCol = collection(db, 'cities');
-const citySnapshot = await getDocs(citiesCol);
-return citySnapshot.docs.map(doc => doc.data());
+  const citiesCol = collection(db, 'cities');
+  const citySnapshot = await getDocs(citiesCol);
+  return citySnapshot.docs.map(doc => doc.data());
 }
+
+export async function getSeeds() {
+  try {
+  const seedsCol = collection(db, 'seeds');
+  const seedsSnapshot = await getDocs(seedsCol);
+  const seedsList = seedsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  console.log(seedsList);
+  return seedsList;
+  } catch (error) {
+  console.error('Ошибка при получении данных:', error);
+  return []; 
+  }
+  }
+
 
 export { auth, db };
  
