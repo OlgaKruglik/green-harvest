@@ -33,7 +33,24 @@ a {
 .menu {
     display: none;
 }
-
+@media (max-width: 866px) {
+    .header-link {
+        position: absolute;
+        flex-direction: row; 
+        padding: 10px; 
+    }
+    .header-link ul {
+        display: block;
+        gap: 1rem; 
+        width: 100%; 
+    }
+    .list-header a {
+        display: none;
+    }
+    .item {
+        height: 530px;
+    }
+}
 @media (max-width: 768px) {
     .header-link {
         position: absolute;
@@ -144,6 +161,7 @@ a {
     }
     .burger-checkbox:checked ~ .menu-list {
         transform: translateX(0);
+        max-width: max-content;
     }
     }
     @media (max-width: 668px) {

@@ -20,18 +20,23 @@ export interface Seed {
     image: string;
     rating: string;
     }
+    export interface Lunar {
+        id: string;
+        dayYes: string;
+        dayNo: string;
+        }
 
-interface UserState {
-user: UserType | null;
-status: 'idle' | 'loading' | 'succeeded' | 'failed';
-error: string | null;
-}
+    interface UserState {
+        user: UserType | null;
+        status: 'idle' | 'loading' | 'succeeded' | 'failed';
+        error: string | null;
+    }
 
-const initialState: UserState = {
-user: null,
-status: 'idle',
-error: null,
-};
+    const initialState: UserState = {
+        user: null,
+        status: 'idle',
+        error: null,
+    };
 
 export const register = createAsyncThunk(
     'user/register',

@@ -30,14 +30,14 @@ function Office() {
     const handleGoogleSignIn = async (e: React.MouseEvent<HTMLImageElement>) => {
         e.preventDefault();
         try {
-        dispatch(signInWithGoogleThunk());
-        console.log(user);
+            dispatch(signInWithGoogleThunk());
+            console.log(user);
         } catch (error) {
-        console.error('Ошибка авторизации через Google:', error);
+            console.error('Ошибка авторизации через Google:', error);
         }
         console.log(signInWithGoogleThunk());
         console.log(userStatus);
-        };
+    };
 
         useEffect(() => {
             if (userStatus === 'succeeded') {

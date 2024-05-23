@@ -1,8 +1,7 @@
 import React from 'react'
 import './style/styleFavorits.css'
 import { useState, useEffect } from 'react';
-import {getSeeds} from '../../firebase'
-import {Seed} from '../../store/slice/userSlice'
+import useSeeds from '../../hooks/useSeeds';
 
 
 
@@ -10,7 +9,7 @@ import {Seed} from '../../store/slice/userSlice'
 function Favorits() {
     const [showSeeds, setShowSeeds] = useState(false);
     const [showSaplings, setShowSaplings] = useState(false);
-    const [seeds, setSeeds] = useState<Seed[]>([]);
+    const seeds = useSeeds();
     
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -22,26 +21,7 @@ function Favorits() {
             setShowSeeds(!checked);
         }
     };
-    
-    useEffect(() => {
-        const fetchSeeds = async () => {
-        try {
-            const seedsData = await getSeeds();
-            const formattedSeedsData: Seed[] = seedsData.map((seedData: any) => ({
-            id: seedData.id,
-            description: seedData.description,
-            type: seedData.type,
-            name: seedData.name,
-            image: seedData.image,
-            rating: seedData.rating,
-        }));
-        setSeeds(formattedSeedsData);
-        } catch (error) {
-            console.error("Ошибка при получении данных о семенах:", error);
-        }
-        };
-        fetchSeeds();
-    }, []);
+
     
     const filteredSeeds = seeds.filter(seed => seed.type === 'seeds' && parseFloat(seed.rating) > 4.7);
     const filteredSaplings = seeds.filter(seed => seed.type === 'seedlings' && parseFloat(seed.rating) > 4.7);

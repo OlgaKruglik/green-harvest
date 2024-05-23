@@ -1,0 +1,132 @@
+.calendar-grid {
+    padding: 20px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: auto;
+    gap: 2rem;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(235, 235, 235, 0.9));
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+    
+}
+
+.calendar-container {
+    padding: 10px 30px;
+    margin-top: 6rem;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+.calendar-container  h2{
+    font-size: 3vw;
+    background-image: linear-gradient(to right, lightseagreen, rgb(13, 19, 16), darkseagreen);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+}
+.calendar-button {
+    display: flex;
+    gap: 2rem;
+}
+.calendar-day {
+    width: 5rem;
+    height: 5rem;
+    font-size: 1.5vw;
+    color: #f3f9f3;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgb(80, 80, 107);
+    background-image: linear-gradient(to right, lightseagreen, rgb(13, 19, 16), darkseagreen);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    }
+.calendar-day:hover {
+    transform: scale(1.1);
+    background-image: linear-gradient(to right, rgb(99, 107, 79), rgb(225, 228, 29), rgb(116, 224, 202));
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.3);
+  }
+  .works-name {
+    display: flex;
+    align-items: center;
+  }
+  .works-input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #dfe1e5;
+    border-radius: 50%;
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.24), inset 0px -2px 4px rgba(255,255,255,0.5);
+    cursor: pointer;
+    position: relative;
+    }
+  .green {
+    background:linear-gradient( green, rgb(111, 228, 111), rgb(127, 247, 7) );
+    box-shadow: 0px 0px 1px 2px #fff, 0px 0px 0px 2px #516351;
+  }
+  .yellow {
+    background:linear-gradient( rgb(198, 189, 4), rgb(222, 243, 29), rgb(230, 244, 106) );
+    box-shadow: 0px 0px 1px 2px #fff, 0px 0px 0px 2px #516351;
+  }
+  .red {
+    background:linear-gradient( rgb(198, 69, 4), rgb(243, 72, 29), rgb(244, 143, 106) );
+    box-shadow: 0px 0px 1px 2px #fff, 0px 0px 0px 2px #516351;
+  }
+  .works-input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 6px;
+    height: 12px;
+    border: solid rgb(15, 15, 15);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  label {
+    font-size: 1.5vw;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .works-name {
+    display: flex;
+    gap: 2rem;
+    
+  }
+  .works-name label {
+    font-size: 1.5vw;
+    color: #3e653e;
+    font-weight: 600;
+    text-shadow: 1px 5px 3px rgb(176 176 213);
+}
+.day-checked {
+    display: flex;
+    justify-content: space-around;
+}
+.calendar-day img {
+  width: 1rem;
+  height: 1rem;
+}
+@media (max-width: 768px) {
+    .calendar-day{
+        width: 3rem;
+        height: 3rem;
+    }
+}
+@media (max-width: 366px) {
+    .calendar-day{
+        width: 2rem;
+        height: 2rem;
+    }
+}

@@ -1,0 +1,32 @@
+.rating {
+    color: blue;
+    font-size: 2rem;
+    
+}
+.rating-text {
+    font-weight: bold;
+    padding-top: 2rem;
+}
+.search-input {
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}
+.seed {
+    width: 70%;
+    margin: auto;
+}
+.favorites-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+.favorites-item h1 {
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: capitalize;
+}
+.seeds {
+    cursor: pointer;
+}

@@ -5,6 +5,8 @@
     margin: 20px;
 }
 .favoritos p {
+    position: sticky;
+    z-index: 2;
     width: 355px;
     height: 320px;
     color: #000;
@@ -104,7 +106,7 @@
 .item {
     display: block;
     position: relative;
-    height: 555px;
+    height: 610px;
     flex-shrink: 0;
     border: 1px solid #000;
     background: #FFF;

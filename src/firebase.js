@@ -33,6 +33,7 @@ export const signUp = async (email, password) => {
   try {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   console.log('Регистрация успешна!', userCredential.user);
+  console.log(userCredential);
   return userCredential;
   } catch (error) {
     console.error(error);
@@ -40,7 +41,7 @@ export const signUp = async (email, password) => {
   };
 
 const googleProvider = new GoogleAuthProvider();
-
+console.log(googleProvider);
 export const signInWithGoogle = async () => {
   try {
   const result = await signInWithRedirect(auth, googleProvider);
@@ -48,6 +49,7 @@ export const signInWithGoogle = async () => {
   const user = result.user;
   // Обработайте данные пользователя, например, сохраните в Redux
   console.log(user);
+  console.log(googleProvider);
   return user;
   } catch (error) {
   console.error(error);
@@ -103,7 +105,6 @@ export async function getSeeds() {
   const seedsCol = collection(db, 'seeds');
   const seedsSnapshot = await getDocs(seedsCol);
   const seedsList = seedsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  console.log(seedsList);
   return seedsList;
   } catch (error) {
   console.error('Ошибка при получении данных:', error);
@@ -111,6 +112,19 @@ export async function getSeeds() {
   }
   }
 
+  export async function getLunarCalendar() {
+    try {
+    const seedsCol = collection(db, 'lunar calendar');
+    const seedsSnapshot = await getDocs(seedsCol);
+    const seedsList = seedsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    console.log(seedsList);
+    return seedsList;
+    } catch (error) {
+    console.error('Ошибка при получении данных:', error);
+    return []; 
+    }
+    }
+  
 
 export { auth, db };
  
