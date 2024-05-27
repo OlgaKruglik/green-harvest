@@ -7,7 +7,6 @@ import image5 from './style/image/image5.jpg';
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 import './style/styleSlider.css'
 import { useState } from 'react';
-import { useEffect } from 'react';
 
 function Slider() {
     const images = [image1, image2, image3, image4, image5];
@@ -49,11 +48,11 @@ function Slider() {
                     <FaAngleDoubleRight className='right-arrow' onClick={nextSlide} />
                     {images.map((src, index) => (
                     <div
-                    className={index === current ? 'slide active' : 'slide'}
-                    key={index}
+                        className={index === current ? 'slide active' : 'slide'}
+                        key={index}
                     >
                     {index === current && (
-                    <img src={src} alt={`Slide ${index}`} />
+                        <img src={src} alt={`Slide ${index}`} />
                     )}
                     </div>
                     ))}

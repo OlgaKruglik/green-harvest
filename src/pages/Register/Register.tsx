@@ -27,20 +27,20 @@ function Register() {
         if (email.value && password.value) {
             dispatch(register({ email: email.value, password: password.value }))
         try {
-        await signUp(email.value, password.value);
-        setEmail({ value: '', error: '' });
-        setPassword({ value: '', error: '' });
+            await signUp(email.value, password.value);
+            setEmail({ value: '', error: '' });
+            setPassword({ value: '', error: '' });
         } catch (error) {
-        console.error(error);
+            console.error(error);
         }
         }
         };
 
         useEffect(() => {
             if (userStatus === 'succeeded') {
-            navigate('/'); 
+                navigate('/'); 
             }
-            }, [userStatus, navigate]);
+        }, [userStatus, navigate]);
         
     return (
         <div className='register'>

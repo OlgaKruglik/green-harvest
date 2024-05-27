@@ -41,94 +41,94 @@ export interface Seed {
 export const register = createAsyncThunk(
     'user/register',
     async ({ email, password }: UserCredentials, { rejectWithValue }) => {
-    try {
-    const userCredential = await signUp(email, password);
-    if (!userCredential) {
-    throw new Error('User registration failed');
-    }
-    const userData = {
-    uid: userCredential.user.uid,
-    email: userCredential.user.email,
-    };
-    return userData;
-    } catch (error: any) {
-    return rejectWithValue(error.message);
-    }
+        try {
+            const userCredential = await signUp(email, password);
+            if (!userCredential) {
+            throw new Error('User registration failed');
+        }
+        const userData = {
+            uid: userCredential.user.uid,
+            email: userCredential.user.email,
+        };
+        return userData;
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
     }
     );
 
     export const login = createAsyncThunk(
         'user/login',
         async ({ email, password }: UserCredentials, { rejectWithValue }) => {
-        try {
-        const userCredential = await singIn(email, password);
-        if (userCredential.user.uid && userCredential.user.email) {
-        return { uid: userCredential.user.uid, email: userCredential.user.email };
-        } else {
-        throw new Error('Missing user information');
+            try {
+                const userCredential = await singIn(email, password);
+                if (userCredential.user.uid && userCredential.user.email) {
+                    return { uid: userCredential.user.uid, email: userCredential.user.email };
+                } else {
+                    throw new Error('Missing user information');
+                }
+            } catch (error: any) {
+                if (error.code === 'auth/user-not-found') {
+                    return rejectWithValue('Пользователь не найден.');
+                } else if (error.code === 'auth/wrong-password') {
+                    return rejectWithValue('Неверный пароль.');
+                } else {
+                    return rejectWithValue(error.message);
+                }
+            }
         }
-        } catch (error: any) {
-        if (error.code === 'auth/user-not-found') {
-        return rejectWithValue('Пользователь не найден.');
-        } else if (error.code === 'auth/wrong-password') {
-        return rejectWithValue('Неверный пароль.');
-        } else {
-        return rejectWithValue(error.message);
-        }
-        }
-        }
-        );
+    );
 
     export const logout = createAsyncThunk(
-    'user/logout',
-    async (_, { rejectWithValue }) => {
-    try {
-    await signOut();
-    return null;
-    } catch (error: any) {
-    return rejectWithValue(error.message);
-    }
-    }
+        'user/logout',
+        async (_, { rejectWithValue }) => {
+            try {
+                await signOut();
+                return null;
+            } catch (error: any) {
+                return rejectWithValue(error.message);
+            }
+        }
     );
 
     export const signInWithGoogleThunk = createAsyncThunk(
         'user/signInWithGoogle',
         async (_, { rejectWithValue }) => {
-        try {
-        const userCredential = await signInWithGoogle();
-        if (!userCredential) {
-        throw new Error('Google sign-in failed');
+            try {
+                const userCredential = await signInWithGoogle();
+                if (!userCredential) {
+                throw new Error('Google sign-in failed');
+            }
+            const userData = {
+                uid: userCredential.uid,
+                email: userCredential.email,
+            };
+            return userData;
+            } catch (error: any) {
+                return rejectWithValue(error.message);  
+            }
         }
-        const userData = {
-        uid: userCredential.uid,
-        email: userCredential.email,
-        };
-        return userData;
-        } catch (error: any) {
-        return rejectWithValue(error.message);
-        }
-        }
-        );
+    );
 
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-    setUser(state, action: PayloadAction<UserType>) {
-    state.user = action.payload;
+        setUser(state, action: PayloadAction<UserType>) {
+        state.user = action.payload;
     },
     removeUser(state) {
-    state.user = null;
+        state.user = null;
     },
     updateUser(state, action: PayloadAction<Partial<UserType>>) {
-    state.user = { ...state.user, ...action.payload };
+        state.user = { ...state.user, ...action.payload };
     },
     setError(state, action: PayloadAction<string>) {
-    state.error = action.payload;
+        state.error = action.payload;
     },
     clearError(state) {
-    state.error = null;
+        state.error = null;
     },
 },
 extraReducers: (builder) => {

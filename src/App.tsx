@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css';
 import Header from './components/Header/Header';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Register from './pages/Register/Register';
 import Home from './pages/Home/Home';
 import Seedlings from './pages/Seedlings/Seedlings';
@@ -22,15 +22,18 @@ function App() {
       <BrowserRouter>
       <Header />
       <Routes>
-        <Route path='/seedGermination' element={<SeedGermination/>} />
+      <Route path='/seedGermination' element={<SeedGermination/>} />
         <Route path='/plantingSeeds' element={<PlantingSeeds/>} />
         <Route path='/cultivation' element={<Cultivation/>} />
         <Route path='/mistakes' element={<Mistakes/>}/>
         <Route path='/' element={<Home />} />
         <Route path='user/register' element={<Register />} />
-        <Route path='/seedlings' element={<Seedlings />} />
-        <Route path='/seeds' element={<Seeds />} />
-        <Route path='/seeds/calendar/:seedName' element={<Calendar/>} />
+        <Route path='/seedlings'  element={<Navigate replace to="/seedlings/1" />} />
+        <Route path='/seedlings/:pageNumber' element={<Seedlings />} />
+        <Route path='/seedlings/:pageNumber/calendar/:seedName' element={<Calendar />} />
+        <Route path='/seeds' element={<Navigate replace to="/seeds/1" />} />
+        <Route path='/seeds/:pageNumber' element={<Seeds />} />
+        <Route path='/seeds/:pageNumber/calendar/:seedName' element={<Calendar/>} />
         <Route path='/office' element={<Office />} />
         <Route path='*' element={<div>404 Not Found</div>} />
       </Routes>
@@ -41,6 +44,14 @@ function App() {
 }
 
 export default App
+
+
+
+
+
+
+
+
 
 
 

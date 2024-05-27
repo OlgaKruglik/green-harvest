@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, signInWithGoogleThunk } from '../../store/slice/userSlice';
-import { signInWithGoogle } from '../../firebase';
 import googleLogo from './style/google-logo.png';
 import { useNavigate } from 'react-router-dom';
-import { getRedirectResult } from "firebase/auth";
 import { RootState, AppDispatch } from '../../store/store';
 
 function Office() {
