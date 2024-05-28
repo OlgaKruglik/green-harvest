@@ -14,8 +14,16 @@ function Office() {
     const userStatus = useSelector((state: RootState) => state.user.status);
     const userError = useSelector((state: RootState) => state.user.error);
     const user = useSelector((state: RootState) => state.user)
+    const [authSuccess, setAuthSuccess] = useState(false);
 
-    
+    const handleAuthSuccess = () => {
+        console.log('handleAuthSuccess called'); 
+        setAuthSuccess(true);
+        setTimeout(() => {
+            console.log('Navigating to home page'); 
+            navigate('/');
+        }, 2000);
+    };
     
     const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +38,7 @@ function Office() {
         try {
             dispatch(signInWithGoogleThunk());
             console.log(user);
+            handleAuthSuccess();
         } catch (error) {
             console.error('Ошибка авторизации через Google:', error);
         }
@@ -37,11 +46,11 @@ function Office() {
         console.log(userStatus);
     };
 
-        useEffect(() => {
-            if (userStatus === 'succeeded') {
-            navigate('/'); 
-            }
-            }, [userStatus, navigate]);
+    useEffect(() => {
+        if (userStatus === 'succeeded') {
+            handleAuthSuccess();
+        }
+    }, [userStatus, navigate, user]);
 
     return (
         <div className='register'>
@@ -71,6 +80,7 @@ function Office() {
                 {userStatus === 'loading' && <p>Авторизация...</p>}
                 {userStatus === 'succeeded' && <p>Добро пожаловать!</p>}
                 {userStatus === 'failed' && <p>Ошибка Авторизации: {userError}</p>}
+                {authSuccess && <p>Аутентификация прошла успешно!</p>}
             </form>
         </div>
     )

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { auth, signUp, singIn, signOut, signInWithGoogle } from '../../firebase';
+import { auth, signUp, singIn, signOut, signInWithGoogle, getRedirectResult } from '../../firebase';
 
 interface UserCredentials {
 email: string;
@@ -94,21 +94,28 @@ export const register = createAsyncThunk(
     export const signInWithGoogleThunk = createAsyncThunk(
         'user/signInWithGoogle',
         async (_, { rejectWithValue }) => {
-            try {
-                const userCredential = await signInWithGoogle();
-                if (!userCredential) {
-                throw new Error('Google sign-in failed');
-            }
-            const userData = {
-                uid: userCredential.uid,
-                email: userCredential.email,
-            };
-            return userData;
-            } catch (error: any) {
-                return rejectWithValue(error.message);  
-            }
+        try {
+        const userCredential = await signInWithGoogle();
+        if (userCredential) {
+        const userData = {
+        uid: userCredential.uid,
+        email: userCredential.email,
+        };
+        return userData;
+        } else {
+        // Если результат null, значит регистрация не была завершена
+        throw new Error('Google sign-in was not completed');
         }
-    );
+        } catch (error: unknown) {
+        // Проверяем, является ли error экземпляром Error
+        if (error instanceof Error) {
+        return rejectWithValue(error.message);
+        }
+        // Если error не является экземпляром Error, возвращаем общее сообщение об ошибке
+        return rejectWithValue('An unknown error occurred');
+        }
+        }
+        );
 
 
 const userSlice = createSlice({
@@ -169,18 +176,17 @@ extraReducers: (builder) => {
         state.status = 'failed';
         state.error = action.payload as string;
     })
-    .addCase(signInWithGoogleThunk.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-    })
     .addCase(signInWithGoogleThunk.fulfilled, (state, action) => {
+        if (action.payload) {
         state.status = 'succeeded';
         state.user = action.payload;
-    })
-    .addCase(signInWithGoogleThunk.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload as string;
-    });
+        } else {
+        state.status = 'idle';
+        // Если регистрация не была завершена, вы можете установить state.user в null или обработать это иначе.
+        state.user = null;
+        }
+        })
+
 },
 });
 

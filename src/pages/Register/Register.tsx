@@ -12,39 +12,62 @@ import { useNavigate } from 'react-router-dom';
 
 function Register() {
     const myRef = useRef(null);
-    console.log(myRef);
+    const user = useSelector((state: RootState) => state.user.user);
     const navigate = useNavigate();
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
     const dispatch = useDispatch<AppDispatch>();
     const userStatus = useSelector((state: RootState) => state.user.status);
     const userError = useSelector((state: RootState) => state.user.error);
+    const [authSuccess, setAuthSuccess] = useState(false);
 
-
+    
+    const handleAuthSuccess = () => {
+        console.log('handleAuthSuccess called'); 
+        setAuthSuccess(true);
+        setTimeout(() => {
+            console.log('Navigating to home page'); 
+            navigate('/');
+        }, 2000);
+    };
 
     const handlerRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         if (email.value && password.value) {
-            dispatch(register({ email: email.value, password: password.value }))
+            dispatch(register({ email: email.value, password: password.value }));
         try {
             await signUp(email.value, password.value);
             setEmail({ value: '', error: '' });
             setPassword({ value: '', error: '' });
+            console.log(setAuthSuccess);
+            handleAuthSuccess(); 
         } catch (error) {
             console.error(error);
-        }
-        }
+        }}
+    };
+
+        const handleGoogleSignIn = async (e: React.FormEvent) => {
+            console.log('handleGoogleSignIn called');
+            e.preventDefault();
+            try {
+                const user = await signInWithGoogle();
+                if (user) {
+                handleAuthSuccess(); 
+            }
+            } catch (error) {
+                console.error('Sign in failed:', error);
+            }
         };
 
-        useEffect(() => {
-            if (userStatus === 'succeeded') {
-                navigate('/'); 
-            }
-        }, [userStatus, navigate]);
+    useEffect(() => {
+        if (userStatus === 'succeeded') {
+            handleAuthSuccess();
+        }
+    }, [userStatus, navigate, user]);
         
     return (
         <div className='register'>
-                <>
+            <>
                 <p>Регистрация</p>
                 <div className='register-email'>
                     <h1>Введите Email</h1>
@@ -66,14 +89,14 @@ function Register() {
                     
                     <div className='register-google'>
                         <p>Войдите через Google</p>
-                        <img src={googleLogo} alt="Google Logo" onClick={signInWithGoogle} className='register-img'/>
+                        <img src={googleLogo} alt="Google Logo" onClick={handleGoogleSignIn} className='register-img'/>
                     </div>
                     <button onClick={handlerRegister}>Зарегистрироваться</button>
-                    {userStatus === 'loading' && <p>Регистрация...</p>}
-                    {userStatus === 'succeeded' && <p>Регистрация успешна!</p>}
-                    {userStatus === 'failed' && <p>Ошибка регистрации: {userError}</p>}
-                </>
-            
+                        {userStatus === 'loading' && <p>Регистрация...</p>}
+                        {userStatus === 'succeeded' && <p>Регистрация успешна!</p>}
+                        {userStatus === 'failed' && <p>Ошибка регистрации: {userError}</p>}
+                        {authSuccess && <p>Аутентификация прошла успешно!</p>} 
+            </>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword, 
   signInWithRedirect, GoogleAuthProvider, 
-  signInWithEmailAndPassword, 
+  signInWithEmailAndPassword, signInWithPopup, 
   onAuthStateChanged as onAuthStateChangedFirebase,
   signOut as signOutFirebase } from "firebase/auth";
 
@@ -29,6 +29,7 @@ const db = getFirestore(app);
 
 
 
+
 export const signUp = async (email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -41,20 +42,39 @@ export const signUp = async (email, password) => {
   };
 
 const googleProvider = new GoogleAuthProvider();
-console.log(googleProvider);
-export const signInWithGoogle = async () => {
-  try {
-    const result = await signInWithRedirect(auth, googleProvider);
-    console.log(result.user);
-    const user = result.user;
-    console.log(user);
-    console.log(googleProvider);
-    return user;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+
+export const getRedirectResult = async (auth) => {
+    try {
+      const result = await auth.getRedirectResult();
+      console.log(result);
+      return result;
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData ? error.customData.email : null;
+      console.log(email);
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      if (email) {
+        console.log(`Ошибка связана с аккаунтом: ${email}`);
+      } else {
+        console.log('Не удалось получить email из ошибки');
+      }
+    }
   };
+
+  export const signInWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      if (result) {
+        const user = result.user;
+        console.log('Аутентификация через Google успешна:', user);
+        return user;
+    }
+    } catch (error) {
+      console.error('Ошибка авторизации через Google:', error);
+      throw error;
+    }
+  }; 
 
 
 
@@ -74,15 +94,21 @@ export const singIn = async (email, password) => {
   }
   };
 
-export const onAuthStateChanged = (callback) => {
-  return onAuthStateChangedFirebase(auth, (user) => { 
+  export const onAuthStateChanged = (callback) => {
+    const unsubscribe = onAuthStateChangedFirebase(auth, (user) => {
     if (user) {
       const uid = user.uid;
+      console.log('Signed in user:', user);
       console.log(uid);
-      }
-      callback(user);
-  })
-}
+    }
+    callback(user);
+    });
+    return unsubscribe;
+    };
+
+
+  
+ 
 
 export const signOut = async () => {
   try {
