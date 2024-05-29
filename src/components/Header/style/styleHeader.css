@@ -30,9 +30,15 @@ a {
     right: 0;
     max-height: 600px;
 }
+.inactive {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .menu {
     display: none;
 }
+
 @media (max-width: 866px) {
     .header-link {
         position: absolute;

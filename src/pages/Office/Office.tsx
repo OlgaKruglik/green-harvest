@@ -26,11 +26,11 @@ function Office() {
     };
     
     const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (email.value && password.value) {
-    dispatch(login({ email: email.value, password: password.value }));
-    console.log(user);
-    }
+        e.preventDefault();
+        if (email.value && password.value) {
+            dispatch(login({ email: email.value, password: password.value }));
+            console.log(user);
+        }
     };
     
     const handleGoogleSignIn = async (e: React.MouseEvent<HTMLImageElement>) => {
