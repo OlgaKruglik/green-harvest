@@ -25,7 +25,7 @@ function Header() {
     return (
         <div className='header-link' onClick={hideForm}>
             <h1>Зелёный Урожай</h1>
-            <ul className='list-header'>
+            <ul className='list-header' data-title={!user ? 'Зарегистрируйтесь или войдите в личный кабинет' : ''}>
                 <li>
                     <Link to='/'>Главнaя</Link>
                 </li>
@@ -40,7 +40,7 @@ function Header() {
                 <div className="menu">
                     <input type="checkbox" id="burger-checkbox" className="burger-checkbox"/>
                         <label htmlFor="burger-checkbox" className="burger"/>
-                        <ul className="menu-list">
+                        <ul className="menu-list" data-title={!user ? 'Зарегистрируйтесь или войдите в личный кабинет' : ''}>
                             <li>
                                 <Link to='/' className="menu-item">Главная</Link>
                             </li>
