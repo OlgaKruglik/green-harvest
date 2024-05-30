@@ -14,10 +14,10 @@
 }
 .into_title {
     color: #FFF;
-    font-family: Forum;
+    font-family: 'EB Garamond', serif;
     font-size: 40px;
     font-weight: 400;
-    line-height: 50px; /* 125% */
+    line-height: 50px; 
     letter-spacing: 3px;
     text-transform: uppercase;
 }
@@ -26,13 +26,13 @@
 /* about start*/
 .about h1, p {
     color: #0C0C0E;
-    font-family: Forum;
+    font-family: 'EB Garamond', serif;
     font-size: 40px;
     margin: 20px;
 }
 .about  p {
     color: #0C0C0E;
-    font-family: Forum;
+    font-family: 'EB Garamond', serif;
     font-size: 40px;
     margin: 20px;
 }
