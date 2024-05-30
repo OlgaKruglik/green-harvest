@@ -10,14 +10,19 @@ import './style/styleHeader.css';
 function Header() {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const user = useSelector((state: RootState) => state.user.user);
-
+    console.log(user);
+    
     const toggleFormVisibility = () => {
         setIsFormVisible(!isFormVisible);
+        console.log(setIsFormVisible);
+        console.log(user);
     };
         
     const hideForm = () => {
         if (isFormVisible) {
             setIsFormVisible(false);
+            console.log(isFormVisible);
+            console.log(user);
         }
     };
 

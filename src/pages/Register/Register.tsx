@@ -91,7 +91,7 @@ function Register() {
                         <p>Войдите через Google</p>
                         <img src={googleLogo} alt="Google Logo" onClick={handleGoogleSignIn} className='register-img'/>
                     </div>
-                    <button onClick={handlerRegister}>Зарегистрироваться</button>
+                    <button onClick={handlerRegister} className='register-button'>Зарегистрироваться</button>
                         {userStatus === 'loading' && <p>Регистрация...</p>}
                         {userStatus === 'succeeded' && <p>Регистрация успешна!</p>}
                         {userStatus === 'failed' && <p>Ошибка регистрации: {userError}</p>}

@@ -76,7 +76,7 @@ function Office() {
                     <p>Войти через Google</p>
                     <img src={googleLogo} alt="Google Logo" onClick={handleGoogleSignIn} className='register-img'/>
                 </div>
-                <button type='submit'>Авторизоваться</button>
+                <button type='submit' className='register-button'>Авторизоваться</button>
                 {userStatus === 'loading' && <p>Авторизация...</p>}
                 {userStatus === 'succeeded' && <p>Добро пожаловать!</p>}
                 {userStatus === 'failed' && <p>Ошибка Авторизации: {userError}</p>}
