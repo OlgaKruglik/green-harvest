@@ -97,7 +97,6 @@ a {
     }
     .logo-form {
         position: absolute; 
-        left: 80%; 
         top: 100%; 
         width: 100%; 
     }
@@ -197,10 +196,6 @@ a {
         .register-img {
         margin-top: 0.5rem; 
         }
-        .logo-form {
-        position: fixed; 
-        left: 70%; 
-        }
         .menu {
         display: block; 
         }
@@ -222,8 +217,5 @@ a {
         }
         }
         @media (max-width: 366px) {
-            .logo-form {
-                position: fixed; 
-                left: 55%; 
-            }   
+
         }

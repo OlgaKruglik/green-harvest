@@ -1,22 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../../store/slice/userSlice';
 import logoUser from './style/icon_profile.svg';
 import { useState } from 'react';
 import { RootState } from '../../store/store'
+import {getRedirectResult} from '../../firebase'
 import './style/styleHeader.css';
 
 
 function Header() {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const user = useSelector((state: RootState) => state.user.user);
-    console.log(user);
+    const dispatch = useDispatch();
     
     const toggleFormVisibility = () => {
         setIsFormVisible(!isFormVisible);
         console.log(setIsFormVisible);
-        console.log(user);
     };
+
+    const handleGoogleSignIn = async () => {
+        console.log('Начало входа через Google');
+        try {
+        const result = await getRedirectResult();
+        console.log('Результат входа через Google:', result);
+        if (result) {
+        console.log('Пользователь успешно вошел через Google:', result);
+        dispatch(setUser({ uid: result.uid, email: result.email }));
+        }
+        } catch (error) {
+        console.error('Ошибка при входе через Google:', error);
+        }
+        };
+
+        useEffect(() => {
+            if (user) {
+            handleGoogleSignIn(); 
+            console.log('Пользователь успешно зарегистрирован');
+            }
+            }, [user]);
         
     const hideForm = () => {
         if (isFormVisible) {
@@ -33,13 +55,13 @@ function Header() {
             <ul className='list-header' data-title={!user ? 'Зарегистрируйтесь или войдите в личный кабинет' : ''}>
                 <li>
                     <Link to='/'>Главнaя</Link>
-                </li>
+                  </li>
                 <li className={!user ? 'inactive' : ''}>
                     <Link to='/seeds'>Семена</Link>
                 </li>
                 <li className={!user ? 'inactive' : ''}>
                     <Link to='/seedlings'>Саженцы</Link>
-                </li>  
+                </li>
             </ul>
             <div className='menu-burger'>
                 <div className="menu">
