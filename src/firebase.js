@@ -68,6 +68,7 @@ export const getRedirectResult = async (auth) => {
       if (result) {
         const user = result.user;
         console.log('Аутентификация через Google успешна:', user);
+        localStorage.setItem('user', JSON.stringify(user));
         return user;
     }
     } catch (error) {

@@ -122,11 +122,16 @@
     .calendar-day{
         width: 3rem;
         height: 3rem;
+        font-size: 2vw;
+    }
+    .works-name label {
+      font-size: 2.5vw;
     }
 }
 @media (max-width: 366px) {
     .calendar-day{
         width: 2rem;
         height: 2rem;
+        font-size: 3vw;
     }
 }

@@ -5,13 +5,17 @@ import { setUser } from '../../store/slice/userSlice';
 import logoUser from './style/icon_profile.svg';
 import { useState } from 'react';
 import { RootState } from '../../store/store'
-import {getRedirectResult} from '../../firebase'
+import {signInWithGoogle} from '../../firebase'
 import './style/styleHeader.css';
 
 
 function Header() {
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const user = useSelector((state: RootState) => state.user.user);
+    // const user = useSelector((state: RootState) => state.user.user);
+    const user = useSelector((state: RootState) => {
+        console.log(state.user.user); // Для отладки
+        return state.user.user;
+        });
     const dispatch = useDispatch();
     
     const toggleFormVisibility = () => {
@@ -19,10 +23,12 @@ function Header() {
         console.log(setIsFormVisible);
     };
 
+    
+
     const handleGoogleSignIn = async () => {
         console.log('Начало входа через Google');
         try {
-        const result = await getRedirectResult();
+        const result = await signInWithGoogle();
         console.log('Результат входа через Google:', result);
         if (result) {
         console.log('Пользователь успешно вошел через Google:', result);
@@ -34,17 +40,25 @@ function Header() {
         };
 
         useEffect(() => {
-            if (user) {
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                const userObject = JSON.parse(savedUser);
+                dispatch(setUser(userObject));
+            }
+        }, [dispatch]);
+
+
+    useEffect(() => { 
+        if (user) {
             handleGoogleSignIn(); 
             console.log('Пользователь успешно зарегистрирован');
-            }
-            }, [user]);
-        
+        }
+    }, [user]);
+
     const hideForm = () => {
         if (isFormVisible) {
             setIsFormVisible(false);
-            console.log(isFormVisible);
-            console.log(user);
+            localStorage.clear();
         }
     };
 

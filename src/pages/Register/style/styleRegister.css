@@ -42,6 +42,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     background-image: none;
+    width: auto;
     }
     
     button:hover {
