@@ -11,11 +11,8 @@ import './style/styleHeader.css';
 
 function Header() {
     const [isFormVisible, setIsFormVisible] = useState(false);
-    // const user = useSelector((state: RootState) => state.user.user);
-    const user = useSelector((state: RootState) => {
-        console.log(state.user.user); // Для отладки
-        return state.user.user;
-        });
+    // const [isReloaded, setIsReloaded] = useState(false);
+    const user = useSelector((state: RootState) => state.user.user);
     const dispatch = useDispatch();
     
     const toggleFormVisibility = () => {
@@ -23,19 +20,24 @@ function Header() {
         console.log(setIsFormVisible);
     };
 
-    
+    // useEffect(() => {
+    //     if (user && !isReloaded) {
+    //     window.location.reload();
+    //     setIsReloaded(true); 
+    //     }
+    //     }, [user]);
 
     const handleGoogleSignIn = async () => {
         console.log('Начало входа через Google');
         try {
-        const result = await signInWithGoogle();
-        console.log('Результат входа через Google:', result);
-        if (result) {
-        console.log('Пользователь успешно вошел через Google:', result);
-        dispatch(setUser({ uid: result.uid, email: result.email }));
-        }
-        } catch (error) {
-        console.error('Ошибка при входе через Google:', error);
+            const result = await signInWithGoogle();
+            console.log('Результат входа через Google:', result);
+            if (result) {
+                console.log('Пользователь успешно вошел через Google:', result);
+                dispatch(setUser({ uid: result.uid, email: result.email }));
+            }
+            } catch (error) {
+            console.error('Ошибка при входе через Google:', error);
         }
         };
 
@@ -47,6 +49,7 @@ function Header() {
             }
         }, [dispatch]);
 
+        
 
     useEffect(() => { 
         if (user) {
@@ -55,20 +58,21 @@ function Header() {
         }
     }, [user]);
 
-    const hideForm = () => {
+
+    const hideFormButton = () => {
         if (isFormVisible) {
             setIsFormVisible(false);
             localStorage.clear();
+            window.location.reload();
         }
-    };
-
+    }
 
     return (
-        <div className='header-link' onClick={hideForm}>
+        <div className='header-link'>
             <h1>Зелёный Урожай</h1>
             <ul className='list-header' data-title={!user ? 'Зарегистрируйтесь или войдите в личный кабинет' : ''}>
                 <li>
-                    <Link to='/'>Главнaя</Link>
+                    <Link to='/' >Главнaя</Link>
                   </li>
                 <li className={!user ? 'inactive' : ''}>
                     <Link to='/seeds'>Семена</Link>
@@ -105,7 +109,7 @@ function Header() {
                     <div className="line"></div>
                         <Link to='/office'>Личный кабинет</Link>
                         <Link to='user/register'>Зарегистрироваться</Link>
-                        <h1 onClick={hideForm} className='logo-form-exit'>Выйти</h1>
+                        <h1 onClick={hideFormButton} className='logo-form-exit'>Выйти</h1>
                     </div>
                 )}
             </div>

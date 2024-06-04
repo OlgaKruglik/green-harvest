@@ -33,6 +33,7 @@ a {
 .inactive {
     opacity: 0.5;
     pointer-events: none;
+    margin-top: 1rem;
 }
 
 .menu {
@@ -168,7 +169,6 @@ a {
         z-index: 22; 
         transform: translateX(-100%);
         transition: transform .3s;
-        width: 200px;
     }
     .menu-item {
         display: block;
@@ -177,6 +177,7 @@ a {
         font-size: 18px;
         text-align: center;
         text-decoration: none;
+        width: auto;
     }
     .menu-item:hover {
         background: rgba(255,255,255,.2)

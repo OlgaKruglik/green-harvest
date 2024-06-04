@@ -44,13 +44,13 @@ export const register = createAsyncThunk(
         try {
             const userCredential = await signUp(email, password);
             if (!userCredential) {
-            throw new Error('User registration failed');
-        }
-        const userData = {
-            uid: userCredential.user.uid,
-            email: userCredential.user.email,
-        };
-        return userData;
+                throw new Error('User registration failed');
+            }
+            const userData = {
+                uid: userCredential.user.uid,
+                email: userCredential.user.email,
+            };
+            return userData;
         } catch (error: any) {
             return rejectWithValue(error.message);
         }
@@ -94,28 +94,25 @@ export const register = createAsyncThunk(
     export const signInWithGoogleThunk = createAsyncThunk(
         'user/signInWithGoogle',
         async (_, { rejectWithValue }) => {
-        try {
-        const userCredential = await signInWithGoogle();
-        if (userCredential) {
-        const userData = {
-        uid: userCredential.uid,
-        email: userCredential.email,
-        };
-        return userData;
-        } else {
-        // Если результат null, значит регистрация не была завершена
-        throw new Error('Google sign-in was not completed');
-        }
-        } catch (error: unknown) {
-        // Проверяем, является ли error экземпляром Error
-        if (error instanceof Error) {
-        return rejectWithValue(error.message);
-        }
-        // Если error не является экземпляром Error, возвращаем общее сообщение об ошибке
-        return rejectWithValue('An unknown error occurred');
-        }
-        }
-        );
+            try {
+                const userCredential = await signInWithGoogle();
+                if (userCredential) {
+                    const userData = {
+                        uid: userCredential.uid,
+                        email: userCredential.email,
+                    };
+                    return userData;
+                } else {
+                    throw new Error('Google sign-in was not completed');
+                }
+                } catch (error: unknown) {
+                    if (error instanceof Error) {
+                        return rejectWithValue(error.message);
+                    }
+                    return rejectWithValue('An unknown error occurred');
+                }
+            }
+    );
 
 
 const userSlice = createSlice({

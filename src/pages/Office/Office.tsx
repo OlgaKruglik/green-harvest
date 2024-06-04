@@ -17,10 +17,8 @@ function Office() {
     const [authSuccess, setAuthSuccess] = useState(false);
 
     const handleAuthSuccess = () => {
-        console.log('handleAuthSuccess called'); 
         setAuthSuccess(true);
         setTimeout(() => {
-            console.log('Navigating to home page'); 
             navigate('/');
         }, 2000);
     };
@@ -37,7 +35,6 @@ function Office() {
         e.preventDefault();
         try {
             dispatch(signInWithGoogleThunk());
-            console.log(user);
             handleAuthSuccess();
         } catch (error) {
             console.error('Ошибка авторизации через Google:', error);
@@ -50,7 +47,7 @@ function Office() {
         if (userStatus === 'succeeded') {
             handleAuthSuccess();
         }
-    }, [userStatus, navigate, user]);
+    }, [userStatus]);
 
     return (
         <div className='register'>

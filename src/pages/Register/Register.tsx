@@ -23,11 +23,9 @@ function Register() {
 
     
     const handleAuthSuccess = () => {
-        console.log('handleAuthSuccess called'); 
         setAuthSuccess(true);
         setTimeout(() => {
-            console.log('Navigating to home page'); 
-            navigate('/');
+            window.location.href = '/'
         }, 2000);
     };
 
@@ -47,7 +45,6 @@ function Register() {
     };
 
         const handleGoogleSignIn = async (e: React.FormEvent) => {
-            console.log('handleGoogleSignIn called');
             e.preventDefault();
             try {
                 const user = await signInWithGoogle();
@@ -63,7 +60,7 @@ function Register() {
         if (userStatus === 'succeeded') {
             handleAuthSuccess();
         }
-    }, [userStatus, navigate, user]);
+    }, [userStatus]);
         
     return (
         <div className='register'>
