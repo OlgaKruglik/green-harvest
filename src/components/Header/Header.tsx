@@ -11,21 +11,16 @@ import './style/styleHeader.css';
 
 function Header() {
     const [isFormVisible, setIsFormVisible] = useState(false);
-    // const [isReloaded, setIsReloaded] = useState(false);
     const user = useSelector((state: RootState) => state.user.user);
     const dispatch = useDispatch();
     
     const toggleFormVisibility = () => {
         setIsFormVisible(!isFormVisible);
-        console.log(setIsFormVisible);
     };
 
-    // useEffect(() => {
-    //     if (user && !isReloaded) {
-    //     window.location.reload();
-    //     setIsReloaded(true); 
-    //     }
-    //     }, [user]);
+    const hideLink = () => {
+        setIsFormVisible(false);
+        };
 
     const handleGoogleSignIn = async () => {
         console.log('Начало входа через Google');
@@ -41,15 +36,15 @@ function Header() {
         }
         };
 
-        useEffect(() => {
-            const savedUser = localStorage.getItem('user');
-            if (savedUser) {
-                const userObject = JSON.parse(savedUser);
-                dispatch(setUser(userObject));
-            }
-        }, [dispatch]);
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            const userObject = JSON.parse(savedUser);
+            dispatch(setUser(userObject));
+        }
+    }, [dispatch]);
 
-        
+
 
     useEffect(() => { 
         if (user) {
@@ -57,6 +52,8 @@ function Header() {
             console.log('Пользователь успешно зарегистрирован');
         }
     }, [user]);
+
+    
 
 
     const hideFormButton = () => {
@@ -66,6 +63,7 @@ function Header() {
             window.location.reload();
         }
     }
+console.log(isFormVisible);
 
     return (
         <div className='header-link'>
@@ -107,8 +105,8 @@ function Header() {
                     <div className="logo-form">
                     <h1>Profile</h1>
                     <div className="line"></div>
-                        <Link to='/office'>Личный кабинет</Link>
-                        <Link to='user/register'>Зарегистрироваться</Link>
+                        <Link to='/office' onClick={hideLink}>Личный кабинет</Link>
+                        <Link to='user/register' onClick={hideLink}>Зарегистрироваться</Link>
                         <h1 onClick={hideFormButton} className='logo-form-exit'>Выйти</h1>
                     </div>
                 )}

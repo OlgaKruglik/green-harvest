@@ -9,6 +9,8 @@
 }
 .header-link li{
     text-decoration: none;
+    margin-top: 2rem;
+    width: 10vw;
 }
 
 a {
@@ -33,7 +35,6 @@ a {
 .inactive {
     opacity: 0.5;
     pointer-events: none;
-    margin-top: 1rem;
 }
 
 .menu {
@@ -51,9 +52,11 @@ a {
   [data-title]::after {
     content: attr(data-title); 
     position: absolute; 
-    left: 0; top: 2em; 
+    left: 40%;
+    top: 4rem; 
     opacity: 0; 
   }
+  
   [data-title]:hover::after {
     opacity: 1; 
   }

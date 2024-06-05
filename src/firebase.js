@@ -32,10 +32,11 @@ const db = getFirestore(app);
 
 export const signUp = async (email, password) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log('Регистрация успешна!', userCredential.user);
-    console.log(userCredential);
-    return userCredential;
+    const user = await createUserWithEmailAndPassword(auth, email, password);
+    console.log('Регистрация успешна!', user.user);
+    console.log(user);
+    localStorage.setItem('user', JSON.stringify(user));
+    return user;
   } catch (error) {
       console.error(error);
     }
