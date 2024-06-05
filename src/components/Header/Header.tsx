@@ -63,7 +63,6 @@ function Header() {
             window.location.reload();
         }
     }
-console.log(isFormVisible);
 
     return (
         <div className='header-link'>
